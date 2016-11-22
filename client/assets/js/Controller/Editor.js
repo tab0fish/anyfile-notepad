@@ -129,7 +129,7 @@ EditorController.prototype.new = function(folder_id){
       folder_id : folder_id,
     })
     self.post_file_load()
-    self.setSyntaxMode(self.file.syntax.ace_js_mode, false);
+    self.selectSyntaxWidget.setSyntaxMode(self.file.syntax.ace_js_mode);
   }
 
   if(this.provider == "Dropbox"){
@@ -191,7 +191,7 @@ EditorController.prototype.post_file_load = function(){
 
   clearInterval(this.check_content_changed_interval)
   this.check_content_changed_interval = setInterval(function(){self.check_content_changed()}, 100)
-  this.setSyntaxMode(this.file.syntax.ace_js_mode);
+  self.selectSyntaxWidget.setSyntaxMode(self.file.syntax.ace_js_mode);
   this.allow_saving()
 
   if(this.file.persisted){
@@ -289,7 +289,7 @@ EditorController.prototype.autosave = function(){
   }
 }
 
-EditorController.prototype.setSyntaxMode = function(syntax){
+EditorController.prototype.setSyntaxMode = function(syntax) {
   var self = this;
   if(window.syntaxes){
     this.file.syntax = syntaxes.find({key:'ace_js_mode', value:syntax})
